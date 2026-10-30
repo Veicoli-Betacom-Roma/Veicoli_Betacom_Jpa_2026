@@ -9,7 +9,7 @@ public class ProjectJpaVeicoliApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ProjectJpaVeicoliApplication.class, args);
 		
-		// prova 222aaaaaaaa
+		// prova 222aaaaaaaa 
 	}
 
 }
