@@ -8,6 +8,8 @@ public class ProjectJpaVeicoliApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ProjectJpaVeicoliApplication.class, args);
+		
+		// prova
 	}
 
 }
