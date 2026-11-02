@@ -18,9 +18,11 @@ import com.betacom.jpa.services.interfaces.BiciServices;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class BiciServicesImpl implements BiciServices{
 	
 	private final BiciRepository biciR;
@@ -55,12 +57,36 @@ public class BiciServicesImpl implements BiciServices{
 		bici.setPieghevole(req.getPieghevole());
 		
 		biciR.save(bici);
-		
 	}
 
 	@Override
 	public void update(BiciReq req) throws Exception {
-		// TODO Auto-generated method stub
+		
+		Bici bici = biciR.findById(req.getId())
+				.orElseThrow(() -> new AcademyException("Bici non trovata"));
+		
+		
+		Alimentazione alim = alimR.findById(req.getAlimentazioneId())
+				.orElseThrow(() -> new AcademyException("Alimentazione non trovata"));
+		
+		Colore colore = colR.findById(req.getColoreId())
+				.orElseThrow(() -> new AcademyException("Colore non trovato"));
+		
+		Categoria categoria = catR.findById(req.getCategoriaId())
+				.orElseThrow(() -> new AcademyException("Categoria non trovato"));
+		
+		bici.setColore(colore);
+		bici.setCategoria(categoria);
+		bici.setAlimentazione(alim);
+		bici.setMarca(req.getMarca());
+		bici.setModello(req.getModello());
+		bici.setAnnoProduzione(req.getAnnoProduzione());
+		bici.setNumeroRuote(req.getNumeroRuote());
+		
+		bici.setNumeroMarce(req.getNumeroMarce());
+		bici.setPieghevole(req.getPieghevole());
+		
+		biciR.save(bici);
 		
 	}
 
