@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.betacom.jpa.dtos.request.BiciReq;
+import com.betacom.jpa.dtos.response.BiciDTO;
 import com.betacom.jpa.exceptions.AcademyException;
 import com.betacom.jpa.models.Alimentazione;
 import com.betacom.jpa.models.Bici;
@@ -15,6 +16,7 @@ import com.betacom.jpa.repositories.BiciRepository;
 import com.betacom.jpa.repositories.CategoriaRepository;
 import com.betacom.jpa.repositories.ColoreRepository;
 import com.betacom.jpa.services.interfaces.BiciServices;
+
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -92,7 +94,11 @@ public class BiciServicesImpl implements BiciServices{
 
 	@Override
 	public void delete(Integer id) throws Exception {
-				
+		log.debug("bici {}", id);
+		Bici bici = biciR.findById(id)
+				.orElseThrow(() -> new AcademyException("bici non trovata"));
+		
+		biciR.delete(bici);		
 	}
 
 	@Override
