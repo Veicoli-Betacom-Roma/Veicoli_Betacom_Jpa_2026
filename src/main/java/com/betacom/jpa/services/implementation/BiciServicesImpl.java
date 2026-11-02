@@ -1,5 +1,7 @@
 package com.betacom.jpa.services.implementation;
 
+
+
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -7,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.betacom.jpa.dtos.request.BiciReq;
 import com.betacom.jpa.dtos.response.BiciDTO;
 import com.betacom.jpa.exceptions.AcademyException;
+import com.betacom.jpa.mappers.BiciMap;
 import com.betacom.jpa.models.Alimentazione;
 import com.betacom.jpa.models.Bici;
 import com.betacom.jpa.models.Categoria;
@@ -103,8 +106,10 @@ public class BiciServicesImpl implements BiciServices{
 
 	@Override
 	public List<BiciDTO> listBici() throws Exception {
-		
-		return null;
+
+	    List<Bici> bici = biciR.findAll();
+
+	    return BiciMap.buildBiciDTO(bici);
 	}
 
 
