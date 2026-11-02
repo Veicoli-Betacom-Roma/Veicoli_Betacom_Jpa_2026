@@ -55,7 +55,7 @@ public class BiciController {
 		}
 		return ResponseEntity.status(status).body(r);
 	}
-	
+	//Il delete finito
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<ResponseDTO> delete(@PathVariable Integer id) throws Exception{
 		biciServices.delete(id);
