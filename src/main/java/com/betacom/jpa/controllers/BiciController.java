@@ -2,6 +2,8 @@ package com.betacom.jpa.controllers;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,6 +12,7 @@ import com.betacom.jpa.dtos.request.BiciReq;
 import com.betacom.jpa.dtos.response.ResponseDTO;
 import com.betacom.jpa.services.interfaces.BiciServices;
 
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,6 +31,22 @@ public class BiciController {
 		try {
 			 biciServices.create(req);
 			 r.setMsg("create successfull");
+		} catch (Exception e) {
+			log.error("Error {}", (e.getCause()));
+			status = HttpStatus.BAD_REQUEST;
+			r.setMsg(e.getMessage());
+		}
+		return ResponseEntity.status(status).body(r);
+	}
+	
+	@PatchMapping("/update")
+	public ResponseEntity<ResponseDTO> update(BiciReq req) {
+		
+		ResponseDTO r = new ResponseDTO();
+		HttpStatus status = HttpStatus.OK;
+		try {
+			 biciServices.update(req);
+			 r.setMsg("update successfull");
 		} catch (Exception e) {
 			log.error("Error {}", (e.getCause()));
 			status = HttpStatus.BAD_REQUEST;
