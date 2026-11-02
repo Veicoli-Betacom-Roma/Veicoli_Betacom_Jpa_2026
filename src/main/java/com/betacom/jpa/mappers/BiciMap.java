@@ -18,9 +18,9 @@ public class BiciMap {
                 .modello(b.getModello())
                 .pieghevole(b.getPieghevole())
                 .numeroMarce(b.getNumeroMarce())
-                .alimentazioneId(b.getId())
-                .coloreId(b.getId())
-                .categoriaId(b.getId())
+                .alimentazioneId(b.getAlimentazione().getId())
+                .coloreId(b.getColore().getId())
+                .categoriaId(b.getCategoria().getId())
                 .build();
     }
 
