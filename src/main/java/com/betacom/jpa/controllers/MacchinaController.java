@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.betacom.jpa.dtos.request.MacchinaReq;
+import com.betacom.jpa.dtos.request.MotoReq;
 import com.betacom.jpa.dtos.request.ValidationGroup;
 import com.betacom.jpa.dtos.response.MacchinaDTO;
 import com.betacom.jpa.dtos.response.ResponseDTO;
@@ -32,38 +33,21 @@ public class MacchinaController {
 	private final MacchinaServices macchinaServices;
 	
 	@PostMapping("/create")
-	public ResponseEntity<ResponseDTO> create(
-			@Validated(ValidationGroup.Create.class)
-			@RequestBody MacchinaReq req) {
-		ResponseDTO r = new ResponseDTO();
-		HttpStatus status = HttpStatus.CREATED;
-		try {
-			 macchinaServices.create(req);
-			 r.setMsg("create successfull");
-		} catch (Exception e) {
-			log.error("Error {}", (e.getCause()));
-			status = HttpStatus.BAD_REQUEST;
-			r.setMsg(e.getMessage());
-		}
-		return ResponseEntity.status(status).body(r);
+	public ResponseEntity<ResponseDTO> create(@Validated(ValidationGroup.Create.class) @RequestBody MacchinaReq req) throws Exception {
+		
+		macchinaServices.create(req);
+		 return ResponseEntity.ok(ResponseDTO.builder()
+		            .msg("create succesful")
+		            .build());
 	}
 	
 	@PatchMapping("/update")
-	public ResponseEntity<ResponseDTO> update(
-			@Validated(ValidationGroup.Update.class)
-			@RequestBody MacchinaReq req) {
+	public ResponseEntity<ResponseDTO> update(@Validated(ValidationGroup.Update.class) @RequestBody MacchinaReq req) throws Exception {
 		
-		ResponseDTO r = new ResponseDTO();
-		HttpStatus status = HttpStatus.OK;
-		try {
-			 macchinaServices.update(req);
-			 r.setMsg("update successfull");
-		} catch (Exception e) {
-			log.error("Error {}", (e.getCause()));
-			status = HttpStatus.BAD_REQUEST;
-			r.setMsg(e.getMessage());
-		}
-		return ResponseEntity.status(status).body(r);
+		macchinaServices.update(req);
+		 return ResponseEntity.ok(ResponseDTO.builder()
+		            .msg("update succesful")
+		            .build());
 	}
 	
 	@DeleteMapping("/delete/{id}")

@@ -4,16 +4,20 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.betacom.jpa.dtos.request.BiciReq;
+import com.betacom.jpa.dtos.request.MacchinaReq;
+import com.betacom.jpa.dtos.request.ValidationGroup;
 import com.betacom.jpa.dtos.response.BiciDTO;
 import com.betacom.jpa.dtos.response.ResponseDTO;
 import com.betacom.jpa.services.interfaces.BiciServices;
@@ -31,34 +35,21 @@ public class BiciController {
 	private final BiciServices biciServices;
 	
 	@PostMapping("/create")
-	public ResponseEntity<ResponseDTO> create(BiciReq req) {
-		ResponseDTO r = new ResponseDTO();
-		HttpStatus status = HttpStatus.CREATED;
-		try {
-			 biciServices.create(req);
-			 r.setMsg("create successfull");
-		} catch (Exception e) {
-			log.error("Error {}", (e.getCause()));
-			status = HttpStatus.BAD_REQUEST;
-			r.setMsg(e.getMessage());
-		}
-		return ResponseEntity.status(status).body(r);
+	public ResponseEntity<ResponseDTO> create(@Validated(ValidationGroup.Create.class) @RequestBody BiciReq req) throws Exception {
+		
+		biciServices.create(req);
+		 return ResponseEntity.ok(ResponseDTO.builder()
+		            .msg("create succesful")
+		            .build());
 	}
 	
 	@PatchMapping("/update")
-	public ResponseEntity<ResponseDTO> update(BiciReq req) {
+	public ResponseEntity<ResponseDTO> update(@Validated(ValidationGroup.Update.class) @RequestBody BiciReq req) throws Exception {
 		
-		ResponseDTO r = new ResponseDTO();
-		HttpStatus status = HttpStatus.OK;
-		try {
-			 biciServices.update(req);
-			 r.setMsg("update successfull");
-		} catch (Exception e) {
-			log.error("Error {}", (e.getCause()));
-			status = HttpStatus.BAD_REQUEST;
-			r.setMsg(e.getMessage());
-		}
-		return ResponseEntity.status(status).body(r);
+		biciServices.update(req);
+		 return ResponseEntity.ok(ResponseDTO.builder()
+		            .msg("update succesful")
+		            .build());
 	}
 	
 	@DeleteMapping("/delete/{id}")
