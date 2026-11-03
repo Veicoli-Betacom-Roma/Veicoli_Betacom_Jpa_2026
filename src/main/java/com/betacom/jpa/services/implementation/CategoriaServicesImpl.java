@@ -29,7 +29,7 @@ public class CategoriaServicesImpl implements CategoriaServices{
 	public void create(CategoriaReq req) throws Exception {
 		log.debug("create {}", req);
 		
-		if (catR.existsByNome(req.getNomeCategoria()))
+		if (catR.existsByNomeCategoria(req.getNomeCategoria()))
 			throw new AcademyException("categoria presente in DB");
 		
 		Categoria c = new Categoria();
@@ -43,7 +43,7 @@ public class CategoriaServicesImpl implements CategoriaServices{
 				.orElseThrow(() -> new AcademyException("categoria non trovata"));
 		
 		if (req.getNomeCategoria() != null && !req.getNomeCategoria().equalsIgnoreCase(c.getNomeCategoria())) {
-			if (catR.existsByNome(req.getNomeCategoria()))
+			if (catR.existsByNomeCategoria(req.getNomeCategoria()))
 				throw new AcademyException("categoria presente in DB");
 			c.setNomeCategoria(req.getNomeCategoria());
 		} 
