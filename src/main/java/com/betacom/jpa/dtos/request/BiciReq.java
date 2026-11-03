@@ -14,6 +14,5 @@ import lombok.ToString;
 public class BiciReq extends VeicoloReq{
 	
 	private Boolean pieghevole;
-
 	private Integer numeroMarce;
 }
