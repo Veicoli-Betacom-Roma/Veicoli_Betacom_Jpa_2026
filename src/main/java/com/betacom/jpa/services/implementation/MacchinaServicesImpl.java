@@ -62,7 +62,32 @@ public class MacchinaServicesImpl implements MacchinaServices{
 
 	@Override
 	public void update(MacchinaReq req) throws Exception {
-		// TODO Auto-generated method stub
+		
+		Macchina macchina = macR.findById(req.getId())
+				.orElseThrow(() -> new AcademyException("Macchina non trovata"));
+		
+		Alimentazione alim = alimR.findById(req.getAlimentazioneId())
+				.orElseThrow(() -> new AcademyException("Alimentazione non trovata"));
+		
+		Colore colore = colR.findById(req.getColoreId())
+				.orElseThrow(() -> new AcademyException("Colore non trovato"));
+		
+		Categoria categoria = catR.findById(req.getCategoriaId())
+				.orElseThrow(() -> new AcademyException("Categoria non trovato"));
+		
+		macchina.setColore(colore);
+		macchina.setCategoria(categoria);
+		macchina.setAlimentazione(alim);
+		macchina.setMarca(req.getMarca());
+		macchina.setModello(req.getModello());
+		macchina.setAnnoProduzione(req.getAnnoProduzione());
+		macchina.setNumeroRuote(req.getNumeroRuote());
+		
+		macchina.setCilindrata(req.getCilindrata());
+		macchina.setNumeroPorte(req.getNumeroPorte());
+		macchina.setTarga(req.getTarga());
+		
+		macR.save(macchina);
 		
 	}
 
