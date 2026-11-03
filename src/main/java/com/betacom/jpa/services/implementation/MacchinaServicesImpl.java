@@ -12,6 +12,7 @@ import com.betacom.jpa.models.Alimentazione;
 import com.betacom.jpa.models.Categoria;
 import com.betacom.jpa.models.Colore;
 import com.betacom.jpa.models.Macchina;
+import com.betacom.jpa.models.Moto;
 import com.betacom.jpa.repositories.AlimentazioneRepository;
 import com.betacom.jpa.repositories.CategoriaRepository;
 import com.betacom.jpa.repositories.ColoreRepository;
@@ -34,6 +35,11 @@ public class MacchinaServicesImpl implements MacchinaServices{
 	
 	@Override
 	public void create(MacchinaReq req) throws Exception {
+		
+		if (macR.existsByTarga(req.getTarga())) {
+	        throw new AcademyException("Targa già esistente");
+	    }
+		
 		Macchina macchina = new Macchina();
 		
 		Alimentazione alim = alimR.findById(req.getAlimentazioneId())
@@ -63,6 +69,15 @@ public class MacchinaServicesImpl implements MacchinaServices{
 
 	@Override
 	public void update(MacchinaReq req) throws Exception {
+		
+		Macchina m = macR.findById(req.getId())
+	            .orElseThrow(() -> new AcademyException("Moto non trovata"));
+
+	    Macchina check = macR.findByTarga(req.getTarga()).orElse(null);
+
+	    if (check != null && !check.getId().equals(req.getId())) { // se l'id della moto è diverso da quello che dobbiamo aggiornare, diamo eccezione
+	        throw new AcademyException("Targa già esistente");
+	    }
 		
 		Macchina macchina = macR.findById(req.getId())
 				.orElseThrow(() -> new AcademyException("Macchina non trovata"));

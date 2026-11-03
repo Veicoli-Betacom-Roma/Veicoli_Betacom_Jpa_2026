@@ -34,7 +34,7 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class MotoServicesImpl implements MotoServices {
 	
-	private final MotoRepository MotoR;
+	private final MotoRepository motoR;
 	private final CategoriaRepository catR;
 	private final AlimentazioneRepository alimR;
 	private final ColoreRepository colR;
@@ -44,6 +44,10 @@ public class MotoServicesImpl implements MotoServices {
 	@Override
 	public void create(MotoReq req) throws Exception {
 		
+		 if (motoR.existsByTarga(req.getTarga())) {
+		        throw new AcademyException("Targa già esistente");
+		    }
+		
 		Moto moto = new Moto();
 		
 		Alimentazione alim = alimR.findById(req.getAlimentazioneId())
@@ -66,13 +70,21 @@ public class MotoServicesImpl implements MotoServices {
 		moto.setTarga(req.getTarga());
 		moto.setCilindrata(req.getCilindrata());
 		
-		MotoR.save(moto);
+		motoR.save(moto);
 	}
 	
 	@Override
 	public void update(MotoReq req) throws Exception {
 		
-		Moto moto = new Moto();
+		Moto moto = motoR.findById(req.getId())
+	            .orElseThrow(() -> new AcademyException("Moto non trovata"));
+
+	    Moto check = motoR.findByTarga(req.getTarga()).orElse(null);
+
+	    if (check != null && !check.getId().equals(req.getId())) { // se l'id della moto è diverso da quello che dobbiamo aggiornare, diamo eccezione
+	        throw new AcademyException("Targa già esistente");
+	    }
+		
 		
 		Alimentazione alim = alimR.findById(req.getAlimentazioneId())
 				.orElseThrow(() -> new AcademyException("Alimentazione non trovata"));
@@ -94,24 +106,23 @@ public class MotoServicesImpl implements MotoServices {
 		moto.setTarga(req.getTarga());
 		moto.setCilindrata(req.getCilindrata());
 		
-		MotoR.save(moto);
+		motoR.save(moto);
 		
 	}
 
 	@Override
 	public void delete(Integer id) throws Exception {
 		log.debug("moto {}", id);
-		Moto moto = MotoR.findById(id)
+		Moto moto = motoR.findById(id)
 				.orElseThrow(() -> new AcademyException("moto non trovata"));
 		
-		MotoR.delete(moto);		
+		motoR.delete(moto);		
 	}
 
 	@Override
 	public List<MotoDTO> listMoto() throws Exception {
 
-	    List<Moto> moto = MotoR.findAll();
-
+	    List<Moto> moto = motoR.findAll();
 	    return MotoMap.buildMotoDTO(moto);
 	}
 
