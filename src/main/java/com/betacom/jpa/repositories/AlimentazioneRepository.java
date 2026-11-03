@@ -6,5 +6,5 @@ import com.betacom.jpa.models.Alimentazione;
 
 public interface AlimentazioneRepository extends JpaRepository<Alimentazione, Integer>{
 
-	Boolean existsByTipo(String tipo);
+	Boolean existsByTipoAlimentazione(String tipoAlimentazione);
 }

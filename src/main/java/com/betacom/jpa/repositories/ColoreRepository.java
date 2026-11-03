@@ -6,5 +6,5 @@ import com.betacom.jpa.models.Colore;
 
 public interface ColoreRepository extends JpaRepository<Colore, Integer>{
 
-	Boolean existsByNome(String nome);
+	Boolean existsByNomeColore(String nomeColore);
 }

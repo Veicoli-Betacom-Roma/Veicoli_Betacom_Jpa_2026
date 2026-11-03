@@ -28,7 +28,7 @@ public class ColoreServicesImpl implements ColoreServices{
 	public void create(ColoreReq req) throws Exception {
 	log.debug("create {}", req);
 	
-	if (colR.existsByNome(req.getNomeColore()))
+	if (colR.existsByNomeColore(req.getNomeColore()))
 		throw new AcademyException("colore presente in DB");
 	
 	Colore c = new Colore();
@@ -42,7 +42,7 @@ public class ColoreServicesImpl implements ColoreServices{
 				.orElseThrow(() -> new AcademyException("colore non trovato"));
 		
 		if (req.getNomeColore() != null && !req.getNomeColore().equalsIgnoreCase(c.getNomeColore())) {
-			if (colR.existsByNome(req.getNomeColore()))
+			if (colR.existsByNomeColore(req.getNomeColore()))
 				throw new AcademyException("colore presente in DB");
 			c.setNomeColore(req.getNomeColore());
 		}

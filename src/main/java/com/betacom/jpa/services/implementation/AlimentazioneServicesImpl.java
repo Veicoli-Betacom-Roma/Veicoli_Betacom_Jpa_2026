@@ -27,7 +27,7 @@ public class AlimentazioneServicesImpl implements AlimentazioneServices{
 	public void create(AlimentazioneReq req) throws Exception {
 		log.debug("create {}", req);
 		
-		if (aliR.existsByTipo(req.getTipoAlimentazione()))
+		if (aliR.existsByTipoAlimentazione(req.getTipoAlimentazione()))
 			throw new AcademyException("alimentazione presente in DB");
 		
 		Alimentazione a = new Alimentazione();
@@ -41,7 +41,7 @@ public class AlimentazioneServicesImpl implements AlimentazioneServices{
 				.orElseThrow(() -> new AcademyException("Alimentazione non trovata"));
 		
 		if (req.getTipoAlimentazione() != null && !req.getTipoAlimentazione().equalsIgnoreCase(a.getTipoAlimentazione())) {
-			if (aliR.existsByTipo(req.getTipoAlimentazione()))
+			if (aliR.existsByTipoAlimentazione(req.getTipoAlimentazione()))
 				throw new AcademyException("alimentazione presente in DB");
 		a.setTipoAlimentazione(req.getTipoAlimentazione());
 		}		
