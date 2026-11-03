@@ -18,8 +18,8 @@ public class VeicoloDTO {
     private String marca;
 	private LocalDate annoProduzione;
 	private String modello;
-	private Integer alimentazioneId;
-    private Integer coloreId;
-    private Integer categoriaId;
+	private AlimentazioneDTO alimentazione;
+    private ColoreDTO colore;
+    private CategoriaDTO categoria;
 
 }
