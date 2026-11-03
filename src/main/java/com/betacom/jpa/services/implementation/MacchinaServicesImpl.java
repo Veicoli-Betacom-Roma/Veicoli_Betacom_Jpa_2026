@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.betacom.jpa.dtos.request.MacchinaReq;
 import com.betacom.jpa.dtos.response.MacchinaDTO;
 import com.betacom.jpa.exceptions.AcademyException;
+import com.betacom.jpa.mappers.MacchinaMap;
 import com.betacom.jpa.models.Alimentazione;
 import com.betacom.jpa.models.Categoria;
 import com.betacom.jpa.models.Colore;
@@ -93,14 +94,17 @@ public class MacchinaServicesImpl implements MacchinaServices{
 
 	@Override
 	public void delete(Integer id) throws Exception {
+		Macchina macchina = macR.findById(id)
+				.orElseThrow(() -> new AcademyException("Macchina non trovata"));
 		
+		macR.delete(macchina);	
 		
 	}
 
 	@Override
 	public List<MacchinaDTO> listMacchina() throws Exception {
-		
-		return null;
+		List<Macchina> macchine = macR.findAll();
+		return MacchinaMap.buildMacchinaDTO(macchine);
 	}
 
 

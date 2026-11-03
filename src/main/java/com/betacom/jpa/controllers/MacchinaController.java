@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.betacom.jpa.dtos.request.BiciReq;
 import com.betacom.jpa.dtos.request.MacchinaReq;
 import com.betacom.jpa.dtos.response.BiciDTO;
+import com.betacom.jpa.dtos.response.MacchinaDTO;
 import com.betacom.jpa.dtos.response.ResponseDTO;
 import com.betacom.jpa.services.interfaces.BiciServices;
 import com.betacom.jpa.services.interfaces.MacchinaServices;
@@ -73,8 +74,7 @@ public class MacchinaController {
 	
 	@GetMapping("/list")
 	public ResponseEntity<Object> list() throws Exception{
-		List<MacchinaDTO> bici = macchinaServices.listMacchina();
-		
+		List<MacchinaDTO> bici =  macchinaServices.listMacchina();
 		return ResponseEntity.ok(bici);
 	}
 }
