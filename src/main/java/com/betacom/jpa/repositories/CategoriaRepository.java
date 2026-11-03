@@ -6,4 +6,5 @@ import com.betacom.jpa.models.Categoria;
 
 public interface CategoriaRepository extends JpaRepository<Categoria, Integer>{
 
+	Boolean existsByNome(String nome);
 }
