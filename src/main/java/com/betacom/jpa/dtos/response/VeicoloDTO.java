@@ -21,5 +21,6 @@ public class VeicoloDTO {
 	private AlimentazioneDTO alimentazione;
     private ColoreDTO colore;
     private CategoriaDTO categoria;
+    private String tipoV;
 
 }
