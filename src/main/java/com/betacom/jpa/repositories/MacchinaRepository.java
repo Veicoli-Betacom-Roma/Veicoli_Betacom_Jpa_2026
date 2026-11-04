@@ -10,5 +10,4 @@ import com.betacom.jpa.models.Moto;
 public interface MacchinaRepository extends JpaRepository<Macchina, Integer>{
 	boolean existsByTarga(String targa);
 	Optional<Macchina> findByTarga(String targa);
-	
 }

@@ -43,7 +43,6 @@ public class ExceptionManager {
 
 	    @ExceptionHandler(Exception.class)
 	    public ResponseEntity<ResponseDTO> handlerException(Exception e) {
-
 	        log.error("Errore imprevisto", e);
 
 	        return ResponseEntity.internalServerError()
